@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="../stylesheets/quizMain.css">
+    <link rel="icon" href="../images/favicon.png" type="image/x-icon">
+
+</head>
+
+<body>
+    <div class="navigation">
+
+        <div class="d-flex p-2 flex-row-reverse" style="background-color: purple;">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" style="color: white;"
+                    aria-expanded="false">
+                    Contact Us
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="https://instagram.com/im_lauren03?igshid=MmIzYWVlNDQ5Yg==" target="_blank">Instagram</a></li>
+                    <li><a class="dropdown-item" href="https://www.facebook.com/thiri.laewin.3?mibextid=LQQJ4d" target="_blank">Facebook</a></li>
+                    <li><a class="dropdown-item" href="https://www.threads.net/@im_lauren03" target="_blank">Thread</a></li>
+                </ul>
+            </div>
+
+            <div class="p-2">
+                <a href="quizMain.html" style="text-decoration: none; color: white; opacity: 75%;">QUIZ</a>
+            </div>
+
+            <div class="p-2">
+                <a href="aboutMe.html" style="text-decoration: none; color: white;">ABOUT ME</a>
+            </div>
+
+            <div class="p-2">
+                <a href="sp.html" style="text-decoration: none; color: white;">WHAT HAS SP DONE</a>
+            </div>
+
+            <div class="p-2">
+                <a href="index.html" style="text-decoration: none; color: white; ">HOME</a>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row g-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+            </div>
+        </div>
+        <br>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Age">
+        </div>
+        <select class="form-select" >
+            <option selected>Gender</option>
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+            <option value="3">Prefer not to say</option>
+        </select>
+    </div>
+    <div class="container mt-5">
+        <h1>Please Answer All The Questions! &#128521;</h1>
+        <div id="box">
+            <div id="quiz-container">
+                <!-- Questions and options will be dynamically added here -->
+            </div>
+
+            <div id="submitButton">
+                <button class="btn btn-primary" id="submit-btn">Submit</button>
+            </div>
+        </div>
+        <div id="result" class="mt-3"></div>
+
+    </div>
+    <footer>
+        <p>By THIRI LAE WIN FROM DCITP_1A_04</p>
+
+        <!--contact-->
+
+        <address>
+            <a href="mailto:thiriw12.23@ichat.sp.edu.sg">Click to email me for more Information.</a>
+        </address>
+    </footer>
+
+    <div id="badge">
+
+        <span class="badge rounded-pill text-bg-light">
+            <a href="../html_files/index.html">BACK TO MAIN PAGE</a>
+        </span>
+
+    </div>
+
+    
+    <script>
+        // questions sources: google, wikipedia
+        const quizData = [
+            {
+                question: "When is Earth Day?",
+                options: ["April 23", "April 22", "December 12", "August 8"],
+                answer: "April 22"
+            },
+            {
+                question: "When was the first Earth Day?",
+                options: ["1980", "1952", "1970", "1973"],
+                answer: "1970"
+            },
+            {
+                question: "Where does the most of Earth's breathable air comes from?",
+                options: ["Ocean", "Dessert", "Space", "Industy?"],
+                answer: "Ocean"
+            },
+            {
+                question: "Trees produce enough air to supply people in their lifetime, how many people per year could live with the air produced by a single tree?",
+                options: ["five", "ten", "two", "four"],
+                answer: "four"
+            },
+            {
+                question: "How long does plastic takes to decompose?",
+                options: ["40 to 1000 years", "10 Days", "20 to 500 years", "9000 years"],
+                answer: "20 to 500 years"
+            }
+
+        ];
+        const quizContainer = document.getElementById("quiz-container");
+        const submitButton = document.getElementById("submit-btn");
+        const resultDiv = document.getElementById("result");
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        function showQuestion() {
+            const quizItem = quizData[currentQuestionIndex];
+
+            if (currentQuestionIndex < quizData.length) {
+                const questionDiv = document.createElement("div");
+                questionDiv.className = "question";
+                questionDiv.innerHTML = `
+                    <h4>${currentQuestionIndex + 1}. ${quizItem.question}</h4>
+                `;
+                // for loop used to generate the questions
+                for (let optionIndex = 0; optionIndex < quizItem.options.length; optionIndex++) {
+                    const option = quizItem.options[optionIndex];
+                    const optionDiv = document.createElement("div");
+                    optionDiv.className = "form-check";
+                    optionDiv.innerHTML = `
+                        <input class="form-check-input" type="radio" name="q${currentQuestionIndex}" value="${option}">
+                        <label class="form-check-label">${option}</label>
+                    `;
+                    questionDiv.appendChild(optionDiv);
+                }
+
+                quizContainer.innerHTML = "";
+                quizContainer.appendChild(questionDiv);
+            } else {
+                showResult();
+            }
+        }
+
+        // calculate score
+        function checkAnswer() {
+            const selectedOption = document.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
+
+            if (selectedOption && selectedOption.value == quizData[currentQuestionIndex].answer) {
+                score++;
+            }
+
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // final score
+        function showResult() {
+            quizContainer.innerHTML = "";
+            resultDiv.innerHTML = `<h3>You scored ${score} out of ${quizData.length}</h3>`;
+            resultDiv.style.display = "block";
+            submitButton.style.display = "none";
+        }
+
+        // Add event listener to the Submit button
+        submitButton.addEventListener("click", checkAnswer);
+
+        // call function showQuestion();
+        showQuestion();
+    </script>
+
+</body>
+
+</html>
